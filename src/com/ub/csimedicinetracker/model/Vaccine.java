@@ -19,8 +19,7 @@ public class Vaccine extends Medicine {
                                                                 System.out.println("Storage Temp: " + storageTemp + "°C");
                                                                         System.out.println("Current Stock: " + getInventory().getQuantity());
                             }
-}
 
-                            }
+
+                            
                     }
-}
