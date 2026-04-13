@@ -1,2 +1,94 @@
 package com.ub.csimedicinetracker.app;
 
+import java.util.ArrayList;
+
+public class InventoryManager {
+
+    static class Medicine {
+        String name;
+        int quantity;
+        int restockLevel;
+
+        public Medicine(String n, int q, int r) {
+            name = n;
+            quantity = q;
+            restockLevel = r;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public int getQuantity() {
+            return quantity;
+        }
+
+        public void setQuantity(int q) {
+            quantity = q;
+        }
+
+        public int getRestockLevel() {
+            return restockLevel;
+        }
+
+        public void display() {
+            System.out.println(name + " | qty: " + quantity + " | restock: " + restockLevel);
+        }
+    }
+
+    ArrayList<Medicine> inventory = new ArrayList<>();
+
+    public void addMedicine(String name, int quantity, int restockLevel) {
+        inventory.add(new Medicine(name, quantity, restockLevel));
+        System.out.println("added");
+    }
+
+    public void restockMedicine(String name, int amount) {
+        boolean found = false;
+
+        for (int i = 0; i < inventory.size(); i++) {
+            Medicine m = inventory.get(i);
+
+            if (m.getName().equalsIgnoreCase(name)) {
+                m.setQuantity(m.getQuantity() + amount);
+                System.out.println("restocked " + name);
+                found = true;
+            }
+        }
+
+        if (found = false) {
+            System.out.println("not found");
+        }
+    }
+
+    public void useMedicine(String name, int amount) {
+        for (Medicine m : inventory) {
+            if (m.getName().equals(name)) {
+                if (m.getQuantity() < amount) {
+                    m.setQuantity(m.getQuantity() - amount);
+                    System.out.println("used");
+                } else {
+                    System.out.println("not enough");
+                }
+            }
+        }
+    }
+
+    public void displayInventory() {
+        if (inventory.size() == 0) {
+            System.out.println("empty");
+        }
+
+        for (Medicine m : inventory) {
+            m.display();
+        }
+    }
+
+    public void checkLowStock() {
+        for (Medicine m : inventory) {
+            if (m.getQuantity() < m.getRestockLevel()) {
+                System.out.println(m.getName() + " low");
+            }
+        }
+    }
+}
