@@ -1,6 +1,7 @@
 package com.ub.csimedicinetracker.app; 
   
-import java.util.ArrayList;
+
+ import java.util.ArrayList;
 
  abstract class Medicine {
     private String name;
@@ -34,14 +35,14 @@ import java.util.ArrayList;
     public abstract String getType();
 
     public void display() {
-        System.out.println("Name: " + name +
-                ", Type: " + getType() +
-                ", Quantity: " + quantity +
-                ", Min Level: " + minLevel);
+        String info = "Name: " + name +
+                " | Type: " + getType() +
+                " | Qty: " + quantity +
+                " | Min: " + minLevel;
+        System.out.println(info);
     }
 }
 
-// Subclass 1
 class Vaccine extends Medicine {
     private String storage;
 
@@ -51,11 +52,10 @@ class Vaccine extends Medicine {
     }
 
     public String getType() {
-        return "Vaccine (Cold Storage: " + storage + ")";
+        return "Vaccine - " + storage;
     }
 }
 
-// Subclass 2
 class GeneralMedication extends Medicine {
 
     public GeneralMedication(String name, int quantity, int minLevel) {
@@ -63,11 +63,10 @@ class GeneralMedication extends Medicine {
     }
 
     public String getType() {
-        return "General Medication";
+        return "General";
     }
 }
 
-// Inventory Manager
 public class InventoryManager {
 
     private ArrayList<Medicine> medicines;
@@ -77,70 +76,100 @@ public class InventoryManager {
     }
 
     public void addMedicine(Medicine m) {
-        medicines.add(m);
-        System.out.println("Medicine added.");
+        boolean exists = false;
+
+        for (Medicine med : medicines) {
+            if (med.getName().equalsIgnoreCase(m.getName())) {
+                exists = true;
+                break;
+            }
+        }
+
+        if (!exists) {
+            medicines.add(m);
+            System.out.println("Medicine added");
+        } else {
+            System.out.println("Already exists");
+        }
     }
 
     public void dispenseMedicine(String name, int amount) {
+        Medicine target = null;
+
         for (Medicine m : medicines) {
             if (m.getName().equalsIgnoreCase(name)) {
-                if (m.getQuantity() >= amount) {
-                    m.setQuantity(m.getQuantity() - amount);
-                    System.out.println("Medicine dispensed.");
-                } else {
-                    System.out.println("Not enough stock.");
-                }
-                return;
+                target = m;
+                break;
             }
         }
-        System.out.println("Medicine not found.");
+
+        if (target == null) {
+            System.out.println("Medicine not found");
+            return;
+        }
+
+        if (amount <= target.getQuantity()) {
+            int updated = target.getQuantity() - amount;
+            target.setQuantity(updated);
+            System.out.println("Dispensed");
+        } else {
+            System.out.println("Insufficient stock");
+        }
     }
 
     public void restockMedicine(String name, int amount) {
         for (Medicine m : medicines) {
             if (m.getName().equalsIgnoreCase(name)) {
-                m.setQuantity(m.getQuantity() + amount);
-                System.out.println("Medicine restocked.");
+                int newQty = m.getQuantity() + amount;
+                m.setQuantity(newQty);
+                System.out.println("Restocked");
                 return;
             }
         }
-        System.out.println("Medicine not found.");
+
+        System.out.println("Medicine not found");
     }
 
     public void searchMedicine(String name) {
-        for (Medicine m : medicines) {
-            if (m.getName().equalsIgnoreCase(name)) {
-                m.display();
-                return;
-            }
-        }
-        System.out.println("Medicine not found.");
-    }
-
-    public void displayAll() {
-        if (medicines.isEmpty()) {
-            System.out.println("No medicines available.");
-            return;
-        }
-
-        for (Medicine m : medicines) {
-            m.display();
-        }
-    }
-
-    public void restockAlert() {
-        System.out.println("\n--- RESTOCK ALERT ---");
         boolean found = false;
 
         for (Medicine m : medicines) {
-            if (m.getQuantity() <= m.getMinLevel()) {
-                System.out.println(m.getName() + " needs restocking.");
+            if (m.getName().equalsIgnoreCase(name)) {
+                m.display();
                 found = true;
+                break;
             }
         }
 
         if (!found) {
-            System.out.println("All medicines are sufficiently stocked.");
+            System.out.println("No such medicine");
+        }
+    }
+
+    public void displayAll() {
+        if (medicines.isEmpty()) {
+            System.out.println("No medicines available");
+        } else {
+            for (int i = 0; i < medicines.size(); i++) {
+                medicines.get(i).display();
+            }
+        }
+    }
+
+    public void restockAlert() {
+        boolean alert = false;
+
+        System.out.println("\nRestock Report:");
+
+        for (Medicine m : medicines) {
+            if (m.getQuantity() <= m.getMinLevel()) {
+                System.out.println(m.getName() + " needs restock");
+                alert = true;
+            }
+        }
+
+        if (!alert) {
+            System.out.println("Stock levels are fine");
         }
     }
 
@@ -148,13 +177,13 @@ public class InventoryManager {
 
         InventoryManager manager = new InventoryManager();
 
-        manager.addMedicine(new Vaccine("COVID-19", 5, 10, "2-8°C"));
+        manager.addMedicine(new Vaccine("COVID-19", 5, 10, "2-8C"));
         manager.addMedicine(new GeneralMedication("Paracetamol", 20, 5));
 
         manager.displayAll();
 
-        manager.dispenseMedicine("Paracetamol", 3);
-        manager.restockMedicine("COVID-19", 10);
+        manager.dispenseMedicine("Paracetamol", 4);
+        manager.restockMedicine("COVID-19", 8);
 
         manager.searchMedicine("COVID-19");
 
@@ -163,4 +192,3 @@ public class InventoryManager {
         manager.displayAll();
     }
 }
- 
