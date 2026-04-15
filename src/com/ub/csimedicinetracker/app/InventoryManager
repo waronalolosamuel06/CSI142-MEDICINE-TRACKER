@@ -1,89 +1,166 @@
-package com.ub.csimedicinetracker.app;
+package com.ub.csimedicinetracker.app; 
+  
+import java.util.ArrayList;
 
- import java.util.ArrayList;
+ abstract class Medicine {
+    private String name;
+    private int quantity;
+    private int minLevel;
 
+    public Medicine(String name, int quantity, int minLevel) {
+        this.name = name;
+        this.quantity = quantity;
+        this.minLevel = minLevel;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public int getMinLevel() {
+        return minLevel;
+    }
+
+    public void setQuantity(int quantity) {
+        if (quantity >= 0) {
+            this.quantity = quantity;
+        }
+    }
+
+    public abstract String getType();
+
+    public void display() {
+        System.out.println("Name: " + name +
+                ", Type: " + getType() +
+                ", Quantity: " + quantity +
+                ", Min Level: " + minLevel);
+    }
+}
+
+// Subclass 1
+class Vaccine extends Medicine {
+    private String storage;
+
+    public Vaccine(String name, int quantity, int minLevel, String storage) {
+        super(name, quantity, minLevel);
+        this.storage = storage;
+    }
+
+    public String getType() {
+        return "Vaccine (Cold Storage: " + storage + ")";
+    }
+}
+
+// Subclass 2
+class GeneralMedication extends Medicine {
+
+    public GeneralMedication(String name, int quantity, int minLevel) {
+        super(name, quantity, minLevel);
+    }
+
+    public String getType() {
+        return "General Medication";
+    }
+}
+
+// Inventory Manager
 public class InventoryManager {
 
-    static class Medicine {
-        private String name;
-        private int quantity;
-        private int restockLevel;
-
-        public Medicine(String name, int quantity, int restockLevel) {
-            this.name = name;
-            this.quantity = quantity;
-            this.restockLevel = restockLevel;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public int getQuantity() {
-            return quantity;
-        }
-
-        public void setQuantity(int quantity) {
-            this.quantity = quantity;
-        }
-
-        public int getRestockLevel() {
-            return restockLevel;
-        }
-
-        public void display() {
-            System.out.println("Medicine: " + name +
-                    ", Quantity: " + quantity +
-                    ", Restock Level: " + restockLevel);
-        }
-    }
-
-    private ArrayList<Medicine> inventory;
+    private ArrayList<Medicine> medicines;
 
     public InventoryManager() {
-        inventory = new ArrayList<>();
+        medicines = new ArrayList<>();
     }
 
-    public void addMedicine(String name, int quantity, int restockLevel) {
-        inventory.add(new Medicine(name, quantity, restockLevel));
+    public void addMedicine(Medicine m) {
+        medicines.add(m);
         System.out.println("Medicine added.");
     }
 
+    public void dispenseMedicine(String name, int amount) {
+        for (Medicine m : medicines) {
+            if (m.getName().equalsIgnoreCase(name)) {
+                if (m.getQuantity() >= amount) {
+                    m.setQuantity(m.getQuantity() - amount);
+                    System.out.println("Medicine dispensed.");
+                } else {
+                    System.out.println("Not enough stock.");
+                }
+                return;
+            }
+        }
+        System.out.println("Medicine not found.");
+    }
+
     public void restockMedicine(String name, int amount) {
-        for (Medicine m : inventory) {
+        for (Medicine m : medicines) {
             if (m.getName().equalsIgnoreCase(name)) {
                 m.setQuantity(m.getQuantity() + amount);
-                System.out.println("Restocked.");
+                System.out.println("Medicine restocked.");
+                return;
             }
         }
-        System.out.println("Medicine not found!");
+        System.out.println("Medicine not found.");
     }
 
-    public void useMedicine(String name, int amount) {
-        for (Medicine m : inventory) {
+    public void searchMedicine(String name) {
+        for (Medicine m : medicines) {
             if (m.getName().equalsIgnoreCase(name)) {
-                if (m.getQuantity() < amount) {
-                    m.setQuantity(m.getQuantity() - amount);
-                    System.out.println("Medicine used.");
-                } else {
-                    System.out.println("Not enough stock!");
-                }
+                m.display();
+                return;
             }
         }
+        System.out.println("Medicine not found.");
     }
 
-    public void displayInventory() {
-        for (Medicine m : inventory) {
+    public void displayAll() {
+        if (medicines.isEmpty()) {
+            System.out.println("No medicines available.");
+            return;
+        }
+
+        for (Medicine m : medicines) {
             m.display();
         }
     }
 
-    public void checkLowStock() {
-        System.out.println("\n--- LOW STOCK ---");
-        for (Medicine m : inventory) {
-            if (m.getQuantity() < m.getRestockLevel()) {
-                System.out.println(m.getName() + " is low!");
+    public void restockAlert() {
+        System.out.println("\n--- RESTOCK ALERT ---");
+        boolean found = false;
+
+        for (Medicine m : medicines) {
+            if (m.getQuantity() <= m.getMinLevel()) {
+                System.out.println(m.getName() + " needs restocking.");
+                found = true;
             }
         }
+
+        if (!found) {
+            System.out.println("All medicines are sufficiently stocked.");
+        }
+    }
+
+    public static void main(String[] args) {
+
+        InventoryManager manager = new InventoryManager();
+
+        manager.addMedicine(new Vaccine("COVID-19", 5, 10, "2-8°C"));
+        manager.addMedicine(new GeneralMedication("Paracetamol", 20, 5));
+
+        manager.displayAll();
+
+        manager.dispenseMedicine("Paracetamol", 3);
+        manager.restockMedicine("COVID-19", 10);
+
+        manager.searchMedicine("COVID-19");
+
+        manager.restockAlert();
+
+        manager.displayAll();
     }
 }
+ 
