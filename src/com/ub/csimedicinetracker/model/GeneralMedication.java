@@ -1,4 +1,4 @@
-package com.ub.csimedicinetracker.moodel;
+package com.ub.csimedicinetracker.model;
 
 public class GeneralMedication extends Medicine {
         private String dosageForm;
