@@ -1,44 +1,56 @@
-package com.ub.csimedicinetracker.app 
- 
- import model.Medicine;
- import java.util.ArrayList;
+package com.ub.csimedicinetracker.app;
+
+import com.ub.csimedicinetracker.model.*;
+import java.util.ArrayList;
 
 public class InventoryManager {
 
     private ArrayList<Medicine> medicines = new ArrayList<>();
 
     public void addMedicine(Medicine m) {
+        for (Medicine med : medicines) {
+            if (med.getName().equalsIgnoreCase(m.getName())) {
+                System.out.println("Error: Already exists.");
+                return;
+            }
+        }
         medicines.add(m);
+        System.out.println("Added: " + m.getName());
+    }
+
+    public void dispenseMedicine(String name, int amount) {
+        for (Medicine m : medicines) {
+            if (m.getName().equalsIgnoreCase(name)) {
+                m.getInventory().removeStock(amount);
+                System.out.println("Dispensed: " + name);
+                return;
+            }
+        }
+        System.out.println("Medicine not found.");
     }
 
     public void restockMedicine(String name, int amount) {
         for (Medicine m : medicines) {
             if (m.getName().equalsIgnoreCase(name)) {
-                m.setQuantity(m.getQuantity() + amount);
+                m.getInventory().addStock(amount);
+                System.out.println("Restocked: " + name);
                 return;
             }
         }
-    }
-
-    public void dispenseMedicine(String name, int amount) {
-        for (Medicine m : medicines) {
-            if (m.getName().equalsIgnoreCase(name) && m.getQuantity() >= amount) {
-                m.setQuantity(m.getQuantity() - amount);
-                return;
-            }
-        }
+        System.out.println("Medicine not found.");
     }
 
     public void displayAll() {
-        for (Medicine m : medicines) {
-            m.display();
+        if (medicines.isEmpty()) {
+            System.out.println("No medicines available.");
+            return;
         }
-    }
 
-    public void restockAlert() {
         for (Medicine m : medicines) {
-            if (m.getQuantity() <= m.getMinLevel()) {
-                System.out.println(m.getName() + " low stock");
+            m.displayDetails();
+
+            if (m.getInventory().isLow()) {
+                System.out.println("!! LOW STOCK !!");
             }
         }
     }
