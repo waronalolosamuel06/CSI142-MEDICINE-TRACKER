@@ -47,18 +47,18 @@ public class InventoryManager {
         if (medicines.isEmpty()) {
             System.out.println("No medicines available.");
             return;
-        }
+        }else {
+            System.out.println("\n---Clinic Inventory---");
+        
 
         for (Medicine m : medicines) {
             m.displayDetails();
 
             if (m.getInventory().isLow()) {
                 System.out.println("!! LOW STOCK !!");
+                System.out.println("----------------------");
             }
         }
-
-        if (!alert) {
-            System.out.println("Stock levels are fine");
-        }
     }
+}
 }
