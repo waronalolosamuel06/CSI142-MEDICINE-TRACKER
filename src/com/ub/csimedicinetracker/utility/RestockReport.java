@@ -1,7 +1,7 @@
 package com.ub.csimedicinetracker.utility;
 
+import com.ub.csimedicinetracker.model.*;
 import java.util.List;
-import com.ub.csimedicinetracker.model.Medicine;
 
 public class RestockReport {
 
