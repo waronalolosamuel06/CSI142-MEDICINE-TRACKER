@@ -1,73 +1,12 @@
-package com.ub.csimedicinetracker.app; 
-  
+package com.ub.csimedicinetracker.app;
 
- import java.util.ArrayList;
+import java.util.ArrayList;
+import com.ub.csimedicinetracker.model.Medicine;
+import com.ub.csimedicinetracker.model.Vaccine;
+import com.ub.csimedicinetracker.model.GeneralMedication;
+import com.ub.csimedicinetracker.model.Stock;
 
- abstract class Medicine {
-    private String name;
-    private int quantity;
-    private int minLevel;
-
-    public Medicine(String name, int quantity, int minLevel) {
-        this.name = name;
-        this.quantity = quantity;
-        this.minLevel = minLevel;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public int getMinLevel() {
-        return minLevel;
-    }
-
-    public void setQuantity(int quantity) {
-        if (quantity >= 0) {
-            this.quantity = quantity;
-        }
-    }
-
-    public abstract String getType();
-
-    public void display() {
-        String info = "Name: " + name +
-                " | Type: " + getType() +
-                " | Qty: " + quantity +
-                " | Min: " + minLevel;
-        System.out.println(info);
-    }
-}
-
-class Vaccine extends Medicine {
-    private String storage;
-
-    public Vaccine(String name, int quantity, int minLevel, String storage) {
-        super(name, quantity, minLevel);
-        this.storage = storage;
-    }
-
-    public String getType() {
-        return "Vaccine - " + storage;
-    }
-}
-
-class GeneralMedication extends Medicine {
-
-    public GeneralMedication(String name, int quantity, int minLevel) {
-        super(name, quantity, minLevel);
-    }
-
-    public String getType() {
-        return "General";
-    }
-}
-
-public class InventoryManager {
+ public class InventoryManager {
 
     private ArrayList<Medicine> medicines;
 
@@ -172,8 +111,7 @@ public class InventoryManager {
             System.out.println("Stock levels are fine");
         }
     }
-
-    public static void main(String[] args) {
+    public class InventoryManager{
 
         InventoryManager manager = new InventoryManager();
 
