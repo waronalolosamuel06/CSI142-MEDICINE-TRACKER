@@ -1,4 +1,4 @@
-package com.ub.csimedicinetracker.app;
+package com.ub.csimedicinetracker.app.clinicapp;
 
 import java.util.Scanner;
 import com.ub.csimedicinetracker.model.*;
