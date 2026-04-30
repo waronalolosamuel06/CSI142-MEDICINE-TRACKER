@@ -1,5 +1,6 @@
 package com.ub.csimedicinetracker.app;
 
+<<<<<<< HEAD
 import java.util.ArrayList;
 import com.ub.csimedicinetracker.model.Medicine;
 import com.ub.csimedicinetracker.model.Vaccine;
@@ -7,105 +8,62 @@ import com.ub.csimedicinetracker.model.GeneralMedication;
 import com.ub.csimedicinetracker.model.Stock;
 
  public class InventoryManager {
+=======
+import com.ub.csimedicinetracker.model.*;
+import java.util.ArrayList;
 
-    private ArrayList<Medicine> medicines;
+public class InventoryManager {
+>>>>>>> 9241e97bfd8960d69bc504cfa58b57183407cb12
 
-    public InventoryManager() {
-        medicines = new ArrayList<>();
-    }
+    private ArrayList<Medicine> medicines = new ArrayList<>();
 
     public void addMedicine(Medicine m) {
-        boolean exists = false;
-
         for (Medicine med : medicines) {
             if (med.getName().equalsIgnoreCase(m.getName())) {
-                exists = true;
-                break;
+                System.out.println("Error: Already exists.");
+                return;
             }
         }
-
-        if (!exists) {
-            medicines.add(m);
-            System.out.println("Medicine added");
-        } else {
-            System.out.println("Already exists");
-        }
+        medicines.add(m);
+        System.out.println("Added: " + m.getName());
     }
 
     public void dispenseMedicine(String name, int amount) {
-        Medicine target = null;
-
         for (Medicine m : medicines) {
             if (m.getName().equalsIgnoreCase(name)) {
-                target = m;
-                break;
+                m.getInventory().removeStock(amount);
+                System.out.println("Dispensed: " + name);
+                return;
             }
         }
-
-        if (target == null) {
-            System.out.println("Medicine not found");
-            return;
-        }
-
-        if (amount <= target.getQuantity()) {
-            int updated = target.getQuantity() - amount;
-            target.setQuantity(updated);
-            System.out.println("Dispensed");
-        } else {
-            System.out.println("Insufficient stock");
-        }
+        System.out.println("Medicine not found.");
     }
 
     public void restockMedicine(String name, int amount) {
         for (Medicine m : medicines) {
             if (m.getName().equalsIgnoreCase(name)) {
-                int newQty = m.getQuantity() + amount;
-                m.setQuantity(newQty);
-                System.out.println("Restocked");
+                m.getInventory().addStock(amount);
+                System.out.println("Restocked: " + name);
                 return;
             }
         }
-
-        System.out.println("Medicine not found");
-    }
-
-    public void searchMedicine(String name) {
-        boolean found = false;
-
-        for (Medicine m : medicines) {
-            if (m.getName().equalsIgnoreCase(name)) {
-                m.display();
-                found = true;
-                break;
-            }
-        }
-
-        if (!found) {
-            System.out.println("No such medicine");
-        }
+        System.out.println("Medicine not found.");
     }
 
     public void displayAll() {
         if (medicines.isEmpty()) {
-            System.out.println("No medicines available");
-        } else {
-            for (int i = 0; i < medicines.size(); i++) {
-                medicines.get(i).display();
-            }
+            System.out.println("No medicines available.");
+            return;
         }
-    }
-
-    public void restockAlert() {
-        boolean alert = false;
-
-        System.out.println("\nRestock Report:");
 
         for (Medicine m : medicines) {
-            if (m.getQuantity() <= m.getMinLevel()) {
-                System.out.println(m.getName() + " needs restock");
-                alert = true;
+            m.displayDetails();
+
+            if (m.getInventory().isLow()) {
+                System.out.println("!! LOW STOCK !!");
             }
         }
+<<<<<<< HEAD
 
         if (!alert) {
             System.out.println("Stock levels are fine");
@@ -128,5 +86,7 @@ import com.ub.csimedicinetracker.model.Stock;
         manager.restockAlert();
 
         manager.displayAll();
+=======
+>>>>>>> 9241e97bfd8960d69bc504cfa58b57183407cb12
     }
 }
