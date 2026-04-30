@@ -4,8 +4,7 @@ public class Vaccine extends Medicine {
 private String manufacturer;
 private double storageTemp;
 
- // Constructor linking to the parent (Medicine) fields
-public Vaccine(String name, String batchID, String expiryDate, Stock inventory, String manufacturer, double storageTemp) {
+ public Vaccine(String name, String batchID, String expiryDate, Stock inventory, String manufacturer, double storageTemp) {
 super(name, batchID, expiryDate, inventory);
 this.manufacturer = manufacturer;
  this.storageTemp = storageTemp;

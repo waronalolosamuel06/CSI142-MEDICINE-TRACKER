@@ -3,8 +3,7 @@ package com.ub.csimedicinetracker.model;
 public class GeneralMedication extends Medicine {
         private String dosageForm;
 
-            // Constructor linking to the parent (Medicine) fields
-                public GeneralMedication(String name, String batchID, String expiryDate, Stock inventory, String dosageForm) {
+                           public GeneralMedication(String name, String batchID, String expiryDate, Stock inventory, String dosageForm) {
                             super(name, batchID, expiryDate, inventory);
                                     this.dosageForm = dosageForm;
                 }
