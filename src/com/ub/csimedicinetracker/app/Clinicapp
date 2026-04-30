@@ -1,7 +1,12 @@
-package com.ub.csimedicinetracker.app.Clinicapp;
+package com.ub.csimedicinetracker.app;
 
 import java.util.Scanner;
-import com.ub.csimedicinetracker.model.*;
+import com.ub.csimedicinetracker.model.Medicine;
+import com.ub.csimedicinetracker.model.GeneralMedication;
+import com.ub.csimedicinetracker.model.Vaccine;
+import com.ub.csimedicinetracker.model.Stock;
+import com.ub.csimedicinetracker.app.InventoryManager;
+import com.ub.csimedicinetracker.utility.RestockReport;
 
 public class Clinicapp {
     public static void main(String[] args) {
