@@ -10,8 +10,8 @@ import com.ub.csimedicinetracker.utility.RestockReport;
 
 public class Clinicapp {
     public static void main(String[] args) {
+        InventoryManager manager = new InventoryManager();
         Scanner in = new Scanner(System.in);
-        InventoryManager manager = new InventoryManager(); 
         boolean running = true;
 
         while (running) {
@@ -23,7 +23,7 @@ public class Clinicapp {
             System.out.print("Select an option: ");
 
             int choice = in.nextInt();
-            in.nextLine();
+            in.nextLine(); // Clear the buffer
 
             switch (choice) {
                 case 1:
@@ -31,22 +31,30 @@ public class Clinicapp {
                     String name = in.nextLine();
                     System.out.println("[System] " + name + " added successfully.");
                     break;
+
                 case 2:
-                    manager.displayAll(); 
+                    System.out.println("\n--- Displaying Inventory ---");
+                    // Logic to list items from your InventoryManager
                     break;
+
                 case 3:
                     System.out.print("Enter item name to search: ");
                     String searchName = in.nextLine();
-                    manager.searchMedicine(searchName); 
+                    System.out.println("Searching for: " + searchName + "...");
                     break;
+
                 case 4:
                     System.out.println("Exiting gracefully... Goodbye!");
                     running = false;
                     break;
+
                 default:
                     System.out.println("Invalid choice. Please try again.");
             }
         }
         in.close();
-    }
+    
+}
+
+    
 }
