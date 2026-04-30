@@ -23,7 +23,7 @@ public class Clinicapp {
             System.out.print("Select an option: ");
 
             int choice = in.nextInt();
-            in.nextLine(); // Clear the buffer
+            in.nextLine(); 
 
             switch (choice) {
                 case 1:
@@ -34,7 +34,7 @@ public class Clinicapp {
 
                 case 2:
                     System.out.println("\n--- Displaying Inventory ---");
-                    // Logic to list items from your InventoryManager
+                    
                     break;
 
                 case 3:
