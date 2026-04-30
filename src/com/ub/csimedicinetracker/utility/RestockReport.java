@@ -5,11 +5,11 @@ package com.ub.csimedicinetracker.utility;
 import com.ub.csimedicinetracker.model.*;
 import java.util.List;
 
-public class Restockreport {
+public class RestockReport {
 
     private List<Medicine> inventory;
 
-    public Restockreport(List<Medicine> inventory) {
+    public RestockReport(List<Medicine> inventory) {
         this.inventory = inventory;
 
     }
