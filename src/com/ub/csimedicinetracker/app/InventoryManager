@@ -1,19 +1,12 @@
 package com.ub.csimedicinetracker.app;
 
-<<<<<<< HEAD
 import java.util.ArrayList;
 import com.ub.csimedicinetracker.model.Medicine;
 import com.ub.csimedicinetracker.model.Vaccine;
 import com.ub.csimedicinetracker.model.GeneralMedication;
 import com.ub.csimedicinetracker.model.Stock;
 
- public class InventoryManager {
-=======
-import com.ub.csimedicinetracker.model.*;
-import java.util.ArrayList;
-
 public class InventoryManager {
->>>>>>> 9241e97bfd8960d69bc504cfa58b57183407cb12
 
     private ArrayList<Medicine> medicines = new ArrayList<>();
 
@@ -63,7 +56,6 @@ public class InventoryManager {
                 System.out.println("!! LOW STOCK !!");
             }
         }
-<<<<<<< HEAD
 
         if (!alert) {
             System.out.println("Stock levels are fine");
@@ -86,7 +78,5 @@ public class InventoryManager {
         manager.restockAlert();
 
         manager.displayAll();
-=======
->>>>>>> 9241e97bfd8960d69bc504cfa58b57183407cb12
     }
 }
