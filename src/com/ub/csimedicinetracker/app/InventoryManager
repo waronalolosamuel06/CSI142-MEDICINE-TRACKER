@@ -61,22 +61,4 @@ public class InventoryManager {
             System.out.println("Stock levels are fine");
         }
     }
-    public class InventoryManager{
-
-        InventoryManager manager = new InventoryManager();
-
-        manager.addMedicine(new Vaccine("COVID-19", 5, 10, "2-8C"));
-        manager.addMedicine(new GeneralMedication("Paracetamol", 20, 5));
-
-        manager.displayAll();
-
-        manager.dispenseMedicine("Paracetamol", 4);
-        manager.restockMedicine("COVID-19", 8);
-
-        manager.searchMedicine("COVID-19");
-
-        manager.restockAlert();
-
-        manager.displayAll();
-    }
 }
