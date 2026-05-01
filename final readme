@@ -1,5 +1,6 @@
 Readme.md
 CSI Medicine Tracker - Clinic Inventory Management System
+ java console application for village clinics in Botswana to track medication stock levels, manage inventory and generate restock alerts
 
 Domain Context
 In a healthcare environment, managing medication inventory is a critical task where errors can lead to life-threatening shortages or the use of expired/compromised supplies. It specifically addresses:
@@ -9,7 +10,6 @@ Proactive Procurement: Using automated alerts to ensure life-saving medications 
 A robust Java-based console application designed to manage medical supplies within a clinic environment. This project demonstrates the practical application of Object-Oriented Programming (OOP) principles—including abstraction, inheritance, and composition—to ensure a scalable and maintainable codebase.
 
 1. Project Structure & Components
-The system is organized into modular packages to separate data models from application logic:
 Package: com.ub.csimedicinetracker.model
 Medicine.java (Abstract): The foundation class defining common attributes (Name, Batch ID, Expiry Date). It mandates specific behaviors via abstract methods like displayDetails().
 Stock.java: Implements Composition. It manages numerical data for each medicine, including current quantity and the minimum threshold required for safety alerts.
@@ -27,15 +27,11 @@ Polymorphic Reporting: The system displays details for various medicine types th
 Automated Restock Analysis: The Restockreport class provides a high-level overview of inventory health, filtering the list to show only items requiring immediate replenishment.
 Stock Validation: Prevents the clinic from dispensing more medication than is currently available, maintaining data integrity across the system.
 
-3. Technical Setup & Execution
-Prerequisites
-Java Development Kit (JDK) 8 or higher.
-Terminal or Command Prompt (PowerShell recommended).
-Compilation Instructions
-To compile the source code into the out directory:
+3.Commands
+To compile:
 javac -d out (Get-ChildItem -Recurse src/*.java)
 Execution Instructions
-To launch the application:
+To Run:
 java -cp out com.ub.csimedicinetracker.app.Clinicapp
 
 4. OOP Implementation Mapping
