@@ -1,0 +1,52 @@
+Readme.md
+CSI Medicine Tracker - Clinic Inventory Management System
+
+Domain Context
+In a healthcare environment, managing medication inventory is a critical task where errors can lead to life-threatening shortages or the use of expired/compromised supplies. It specifically addresses:
+Cold-Chain Integrity: Monitoring storage temperatures for vaccines.
+Inventory Reliability: Reducing manual counting errors through automated tracking.
+Proactive Procurement: Using automated alerts to ensure life-saving medications are never out of stock.
+A robust Java-based console application designed to manage medical supplies within a clinic environment. This project demonstrates the practical application of Object-Oriented Programming (OOP) principles—including abstraction, inheritance, and composition—to ensure a scalable and maintainable codebase.
+
+1. Project Structure & Components
+The system is organized into modular packages to separate data models from application logic:
+Package: com.ub.csimedicinetracker.model
+Medicine.java (Abstract): The foundation class defining common attributes (Name, Batch ID, Expiry Date). It mandates specific behaviors via abstract methods like displayDetails().
+Stock.java: Implements Composition. It manages numerical data for each medicine, including current quantity and the minimum threshold required for safety alerts.
+Vaccine.java: A specialized subclass of Medicine that handles cold-chain data, such as manufacturer details and storage temperature requirements.
+GeneralMedication.java: A subclass of Medicine used for standard pharmaceutical items, including dosage form specifications.
+
+Package: com.ub.csimedicinetracker.app
+InventoryManager.java: Acts as the controller. It manages a dynamic ArrayList<Medicine> and contains the business logic for adding, dispensing, and restocking items.
+Restockreport.java: (Critical Utility) A dedicated reporting class that analyzes the inventory. It iterates through all stored medicines and identifies items where the current stock is equal to or below the minimum threshold. This ensures clinic staff have an automated way to prevent critical shortages.
+Clinicapp.java: The entry point of the application featuring a user-friendly, loop-based menu system for real-time interaction.
+
+2. Core Functional Features
+Dynamic Inventory Tracking: Uses Java Collections (ArrayList) to store records dynamically, allowing the inventory to grow as needed without manual resizing.
+Polymorphic Reporting: The system displays details for various medicine types through a single unified interface, ensuring the correct displayDetails() method is called for each specific object type.
+Automated Restock Analysis: The Restockreport class provides a high-level overview of inventory health, filtering the list to show only items requiring immediate replenishment.
+Stock Validation: Prevents the clinic from dispensing more medication than is currently available, maintaining data integrity across the system.
+
+3. Technical Setup & Execution
+Prerequisites
+Java Development Kit (JDK) 8 or higher.
+Terminal or Command Prompt (PowerShell recommended).
+Compilation Instructions
+To compile the source code into the out directory:
+javac -d out (Get-ChildItem -Recurse src/*.java)
+Execution Instructions
+To launch the application:
+java -cp out com.ub.csimedicinetracker.app.Clinicapp
+
+4. OOP Implementation Mapping
+Abstraction: Used in Medicine.java to define a template for all drugs.
+Inheritance: Vaccine and GeneralMedication inherit core properties from Medicine.
+Encapsulation: All sensitive data is kept private, accessible only via controlled public methods.
+Composition: Every Medicine "has-a" Stock object to handle its inventory levels.
+
+Feature Summary
+Dynamic Inventory Management: Allows for the addition, removal, and searching of various medication types using Java Collections.
+Polymorphic Medication Handling: A unified system that treats different medication types (Vaccines vs. General Meds) appropriately through method overriding.
+Stock Validation Logic: Prevents the system from dispensing more units than are physically available, ensuring data integrity.
+Automated Restock Reporting: A specialized utility that scans the entire database to find items at risk of running out based on safety thresholds.
+
